@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Simple NodeJS API integration testing using Mocha + Chai | Matthew Butt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="IntroductionIntegration testing is a critical part of the QA lifecycle. It can be used as a final check before any backend API deployment and give confidence to the development team that the deploy is">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Simple NodeJS API integration testing using Mocha + Chai">
+<meta property="og:url" content="http://preinvent.com/2016/11/02/simple-nodejs-api-testing-using-mocha-and-chai/index.html">
+<meta property="og:site_name" content="Matthew Butt">
+<meta property="og:description" content="IntroductionIntegration testing is a critical part of the QA lifecycle. It can be used as a final check before any backend API deployment and give confidence to the development team that the deploy is">
+<meta property="og:updated_time" content="2016-11-03T05:45:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Simple NodeJS API integration testing using Mocha + Chai">
+<meta name="twitter:description" content="IntroductionIntegration testing is a critical part of the QA lifecycle. It can be used as a final check before any backend API deployment and give confidence to the development team that the deploy is">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/vendor/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Matthew Butt</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/matt.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/matt.jpg" />
+            <h2 id="name">Matthew Butt</h2>
+            <h3 id="title">VP Engineering, Video</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Los Angeles, US</span>
+            <a id="follow" target="_blank" href="https://github.com/preinvent/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                2
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                6
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/preinvent" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/preinvent" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/mbutt" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-simple-nodejs-api-testing-using-mocha-and-chai" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Simple NodeJS API integration testing using Mocha + Chai
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/11/02/simple-nodejs-api-testing-using-mocha-and-chai/">
+            <time datetime="2016-11-03T04:13:00.000Z" itemprop="datePublished">2016-11-02</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/chai/">chai</a>, <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/mocha/">mocha</a>, <a class="tag-link" href="/tags/nodejs/">nodejs</a>, <a class="tag-link" href="/tags/testing/">testing</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Integration testing is a critical part of the QA lifecycle. It can be used as a final check before any backend API deployment and give confidence to the development team that the deploy is safe.</p>
+<p>We’ll work through a simple API test written in NodeJS and use a couple of popular testing frameworks:</p>
+<ul>
+<li><a href="https://mochajs.org/" target="_blank" rel="external">mocha</a> - JavaScript testing framework</li>
+<li><a href="http://chaijs.com/" target="_blank" rel="external">chai</a> - library that provides assertion logic</li>
+<li><a href="https://github.com/chaijs/chai-http" target="_blank" rel="external">chai-http</a> - extensions for making HTTP requests to APIs</li>
+</ul>
+<p>For our example we’ll use an existing public API - the <a href="https://developer.yahoo.com/weather/" target="_blank" rel="external">Yahoo Weather API</a>. We’ll build two tests, one positive and one negative.</p>
+<h1 id="Create-the-project"><a href="#Create-the-project" class="headerlink" title="Create the project"></a>Create the project</h1><p>Let’s get the project started. Assuming you already have npm installed, in a new directory, initialize the project and install the relevant npm modules:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ mkdir sample-yahoo-api-tests</div><div class="line">$ npm init</div><div class="line">$ npm install --save-dev mocha chai chai-http</div></pre></td></tr></table></figure>
+<p>This creates a <code>package.json</code> file that contains the package dependencies mentioned above. Let’s make a few changes to this as so (don’t change the versiopn numbers after each package in the devDependencies section as they will probably be different in your case):</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"name"</span>: <span class="string">"sample-yahoo-api-tests"</span>,</div><div class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</div><div class="line">  <span class="attr">"description"</span>: <span class="string">"Yahoo Weather API tests"</span>,</div><div class="line">  <span class="attr">"main"</span>: <span class="string">"index.js"</span>,</div><div class="line">  <span class="attr">"dependencies"</span>: &#123;</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">"devDependencies"</span>: &#123;</div><div class="line">    <span class="attr">"chai"</span>: <span class="string">"^3.5.0"</span>,</div><div class="line">    <span class="attr">"chai-http"</span>: <span class="string">"^3.0.0"</span>,</div><div class="line">    <span class="attr">"mocha"</span>: <span class="string">"^3.1.2"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">"author"</span>: <span class="string">""</span>,</div><div class="line">  <span class="attr">"license"</span>: <span class="string">"ISC"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Mocha gives us a standard and simple format of writing tests. Generally we group tests into individual test files. Each test file then has a smaller group and then the tests within.</p>
+<p>Each file has a describe…it structure as so:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">describe(&quot;Some feature or API&quot;)</div><div class="line">    it(&quot;Should or should not do something&quot;)</div><div class="line">    it(&quot;Should or should not do something else&quot;)</div></pre></td></tr></table></figure>
+<p>Our general structure will be:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">'Yahoo Weather API'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    it(<span class="string">"returns a result for Santa Monica, CA"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// Test code here</span></div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    it(<span class="string">"returns null results for invalid location"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// Test code here</span></div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>chai-http allows us to easily make requests to an HTTP endpoint and handle the response. The general format is:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">chai.request(server)</div><div class="line">    .get(path)</div><div class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</div><div class="line">        <span class="comment">// Test code here</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>The Yahoo endpoint we’re going to test is <code>https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22Santa%20Monica%2C%20CA%22)&amp;format=json&amp;env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys</code> which will return us basic weather information for Santa Monica, CA:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"> <span class="attr">"query"</span>: &#123;</div><div class="line">  <span class="attr">"count"</span>: <span class="number">1</span>,</div><div class="line">  <span class="attr">"created"</span>: <span class="string">"2016-11-03T05:18:01Z"</span>,</div><div class="line">  <span class="attr">"lang"</span>: <span class="string">"en-US"</span>,</div><div class="line">  <span class="attr">"results"</span>: &#123;</div><div class="line">   <span class="attr">"channel"</span>: &#123;</div><div class="line">    <span class="attr">"item"</span>: &#123;</div><div class="line">     <span class="attr">"condition"</span>: &#123;</div><div class="line">      <span class="attr">"code"</span>: <span class="string">"31"</span>,</div><div class="line">      <span class="attr">"date"</span>: <span class="string">"Wed, 02 Nov 2016 09:00 PM PDT"</span>,</div><div class="line">      <span class="attr">"temp"</span>: <span class="string">"70"</span>,</div><div class="line">      <span class="attr">"text"</span>: <span class="string">"Clear"</span></div><div class="line">     &#125;</div><div class="line">    &#125;</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="Building-the-first-positive-test"><a href="#Building-the-first-positive-test" class="headerlink" title="Building the first (positive) test"></a>Building the first (positive) test</h1><p>Putting this all together, here’s our first test that we’ll create in <code>test/yahoo-weather.spec.js</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> chai = <span class="built_in">require</span>(<span class="string">'chai'</span>);</div><div class="line"><span class="keyword">var</span> chaiHttp = <span class="built_in">require</span>(<span class="string">'chai-http'</span>);</div><div class="line"><span class="keyword">var</span> expect = chai.expect;</div><div class="line"></div><div class="line"><span class="comment">// Tell chai to use chai-http</span></div><div class="line">chai.use(chaiHttp);</div><div class="line"></div><div class="line">describe(<span class="string">'Yahoo Weather API'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">    it(<span class="string">"returns a result for Santa Monica, CA"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> chai.request(<span class="string">'https://query.yahooapis.com'</span>)</div><div class="line">            .get(<span class="string">"/v1/public/yql?env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&amp;format=json&amp;q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20in%20%28select%20woeid%20from%20geo.places%281%29%20where%20text%3D%27Santa%20Monica%2C%20CA%27%29"</span>)</div><div class="line">            .then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</div><div class="line">                expect(res).to.have.status(<span class="number">200</span>);</div><div class="line">                expect(res.body).to.have.property(<span class="string">'query'</span>);</div><div class="line">                expect(res.body.query).to.have.property(<span class="string">'results'</span>);</div><div class="line">                expect(res.body.query.results).to.be.instanceof(<span class="built_in">Object</span>);</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Note that there are actually 4 assertion tests here:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">expect(res).to.have.status(<span class="number">200</span>);</div></pre></td></tr></table></figure>
+<p>This ensures that the HTTP response code for this request is 200, which is a general success response. If the server returns some error, we’ll get a failure in our tests here.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">expect(res.body).to.have.property(<span class="string">'query'</span>);</div><div class="line">expect(res.body.query).to.have.property(<span class="string">'results'</span>);</div></pre></td></tr></table></figure>
+<p>Here we test that the JSON response has a query property, and inside we have a response property.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">expect(res.body.query.results).to.be.instanceof(<span class="built_in">Object</span>);</div></pre></td></tr></table></figure>
+<p>Now ensure that query.results is an Object.</p>
+<h1 id="Running-the-first-test"><a href="#Running-the-first-test" class="headerlink" title="Running the first test"></a>Running the first test</h1><p>We can now run this test to check the results by invoking mocha:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ node_modules/mocha/bin/mocha test/yahoo-weather.spec.js</div><div class="line">  Yahoo Weather API</div><div class="line">    ✓ returns a result for Santa Monica, CA (272ms)</div><div class="line"></div><div class="line">  1 passing (272ms)</div></pre></td></tr></table></figure>
+<h1 id="Building-the-second-negative-test"><a href="#Building-the-second-negative-test" class="headerlink" title="Building the second (negative) test"></a>Building the second (negative) test</h1><p>As you can see, we now have a simple working API test! Let’s go ahead and add our second test that ensure we get a null response for a city that doesn’t exist:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> chai = <span class="built_in">require</span>(<span class="string">'chai'</span>);</div><div class="line"><span class="keyword">var</span> chaiHttp = <span class="built_in">require</span>(<span class="string">'chai-http'</span>);</div><div class="line"><span class="keyword">var</span> expect = chai.expect;</div><div class="line"></div><div class="line"><span class="comment">// Tell chai to use chai-http</span></div><div class="line">chai.use(chaiHttp);</div><div class="line"></div><div class="line">describe(<span class="string">'Yahoo Weather API'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">    it(<span class="string">"returns a result for Santa Monica, CA"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> chai.request(<span class="string">'https://query.yahooapis.com'</span>)</div><div class="line">            .get(<span class="string">"/v1/public/yql?env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&amp;format=json&amp;q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20in%20%28select%20woeid%20from%20geo.places%281%29%20where%20text%3D%27Santa%20Monica%2C%20CA%27%29"</span>)</div><div class="line">            .then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</div><div class="line">                expect(res).to.have.status(<span class="number">200</span>);</div><div class="line">                expect(res.body).to.have.property(<span class="string">'query'</span>);</div><div class="line">                expect(res.body.query).to.have.property(<span class="string">'results'</span>);</div><div class="line">                expect(res.body.query.results).to.be.instanceof(<span class="built_in">Object</span>);</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    it(<span class="string">"returns null results for invalid location"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> chai.request(<span class="string">'https://query.yahooapis.com'</span>)</div><div class="line">            .get(<span class="string">"/v1/public/yql?env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&amp;format=json&amp;q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20in%20%28select%20woeid%20from%20geo.places%281%29%20where%20text%3D%27AAAAAAAAAAAA%2C%20CA%27%29"</span>)</div><div class="line">            .then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</div><div class="line">                expect(res).to.have.status(<span class="number">200</span>);</div><div class="line">                expect(res.body).to.have.property(<span class="string">'query'</span>);</div><div class="line">                expect(res.body.query).to.have.property(<span class="string">'results'</span>);</div><div class="line">                expect(res.body.query.results).to.be.null;</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Our second test is similar to the first, except we’re passing in a city name that we know doesn’t exist (‘AAAAAAAAAAAA’) and expecting the results to be null. Let’s run this and make sure it works:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ node_modules/mocha/bin/mocha test/yahoo-weather.spec.js</div><div class="line">  Yahoo Weather API</div><div class="line">    ✓ returns a result for Santa Monica, CA (272ms)</div><div class="line">    ✓ returns null results for invalid location (207ms)</div><div class="line"></div><div class="line">  2 passing (488ms)</div></pre></td></tr></table></figure>
+<h1 id="Tidy-up"><a href="#Tidy-up" class="headerlink" title="Tidy up"></a>Tidy up</h1><p>Let’s do some tidying up. Firstly, typing in the full test command is long-winded. We’ll create a script in package.json to make it easier to run. Add the <code>scripts</code> section into your package.json file:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">"scripts": &#123;</div><div class="line">  "test": "./node_modules/.bin/mocha --reporter spec test/*.spec.js"</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>Now, all you have to do to run the tests is:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm <span class="built_in">test</span></div></pre></td></tr></table></figure>
+<p>Much easier!</p>
+<p>Next, let’s clear up our code a little. We’ll add a helper file that’ll clean up the API URL that we’re calling for both tests. Create <code>test/yahoo-helpers.js</code> and add this as content:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> queryString = <span class="built_in">require</span>(<span class="string">'query-string'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports.getQueryForLocation = <span class="function"><span class="keyword">function</span>(<span class="params">location</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text='"</span> + location + <span class="string">"')"</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports.getUrlForLocation = <span class="function"><span class="keyword">function</span>(<span class="params">location</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> query = <span class="keyword">this</span>.getQueryForLocation(location);</div><div class="line">    <span class="keyword">var</span> params = &#123;</div><div class="line">        <span class="attr">q</span>: query,</div><div class="line">        <span class="attr">format</span>: <span class="string">'json'</span>,</div><div class="line">        <span class="attr">env</span>: <span class="string">'store://datatables.org/alltableswithkeys'</span></div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">return</span> <span class="string">"/v1/public/yql?"</span> + queryString.stringify(params);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>We also need to install the query-string npm module which helps us create the full URL:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install --save-dev query-string</div></pre></td></tr></table></figure>
+<p>And make changes in the test file to use these new helpers:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> chai = <span class="built_in">require</span>(<span class="string">'chai'</span>);</div><div class="line"><span class="keyword">var</span> chaiHttp = <span class="built_in">require</span>(<span class="string">'chai-http'</span>);</div><div class="line"><span class="keyword">var</span> expect = chai.expect;</div><div class="line"><span class="keyword">var</span> yahooHelpers = <span class="built_in">require</span>(<span class="string">'./yahoo-helpers.js'</span>);</div><div class="line"></div><div class="line">chai.use(chaiHttp);</div><div class="line"></div><div class="line"><span class="keyword">var</span> apiBase = <span class="string">'https://query.yahooapis.com'</span>;</div><div class="line"></div><div class="line">describe(<span class="string">'Yahoo Weather API'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">    it(<span class="string">"returns a result for Santa Monica, CA"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> chai.request(apiBase)</div><div class="line">            .get(yahooHelpers.getUrlForLocation(<span class="string">'Santa Monica, CA'</span>))</div><div class="line">            .then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</div><div class="line">                expect(res).to.have.status(<span class="number">200</span>);</div><div class="line">                expect(res.body).to.have.property(<span class="string">'query'</span>);</div><div class="line">                expect(res.body.query).to.have.property(<span class="string">'results'</span>);</div><div class="line">                expect(res.body.query.results).to.be.instanceof(<span class="built_in">Object</span>);</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    it(<span class="string">"returns null results for invalid location"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> chai.request(apiBase)</div><div class="line">            .get(yahooHelpers.getUrlForLocation(<span class="string">'AAAAAAAAAAAAAAAA'</span>))</div><div class="line">            .then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</div><div class="line">                expect(res).to.have.status(<span class="number">200</span>);</div><div class="line">                expect(res.body).to.have.property(<span class="string">'query'</span>);</div><div class="line">                expect(res.body.query).to.have.property(<span class="string">'results'</span>);</div><div class="line">                expect(res.body.query.results).to.be.null;</div><div class="line">            &#125;);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h1 id="Recap"><a href="#Recap" class="headerlink" title="Recap"></a>Recap</h1><p>And we’re done! To recap:</p>
+<ul>
+<li>We used mocha as our basic testing framework</li>
+<li>We used chai to give us assertion support using the expect keyword</li>
+<li>We used chai-http to give us the ability to make HTTP requests</li>
+<li>We created two integration tests - a positive (to check a valid response) and a negative (to ensure we get a null response for a bad request)</li>
+</ul>
+<p>The full code is in the <a href="https://github.com/preinvent/sample-yahoo-api-tests" target="_blank" rel="external">github project</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://preinvent.com/2016/11/02/simple-nodejs-api-testing-using-mocha-and-chai/" data-id="civ1xugbq0000rbyjasevnz9v" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://preinvent.com/2016/11/02/simple-nodejs-api-testing-using-mocha-and-chai/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://preinvent.com/2016/11/02/simple-nodejs-api-testing-using-mocha-and-chai/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2016/11/01/migrating-to-facebook-yarn/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Migrating to Facebook&#39;s Yarn package manager</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/02/simple-nodejs-api-testing-using-mocha-and-chai/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/02/simple-nodejs-api-testing-using-mocha-and-chai/" class="title">Simple NodeJS API integration testing using Mocha + Chai</a></p>
+                            <p class="item-date"><time datetime="2016-11-03T04:13:00.000Z" itemprop="datePublished">2016-11-02</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/01/migrating-to-facebook-yarn/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/01/migrating-to-facebook-yarn/" class="title">Migrating to Facebook&#39;s Yarn package manager</a></p>
+                            <p class="item-date"><time datetime="2016-11-01T17:43:00.000Z" itemprop="datePublished">2016-11-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/chai/">chai</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mocha/">mocha</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/testing/">testing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yarn/">yarn</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 Matthew Butt<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://preinvent.com/2016/11/02/simple-nodejs-api-testing-using-mocha-and-chai/';
+        
+        this.page.identifier = 'simple-nodejs-api-testing-using-mocha-and-chai';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'preinvent-blog' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/vendor/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
